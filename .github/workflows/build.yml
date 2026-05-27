@@ -1,0 +1,41 @@
+name: Build Flutter APK
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '3.10.0'  # 指定稳定版，避免版本冲突
+          
+      - name: Create Project Structure
+        run: |
+          flutter create /tmp/work_timer_optimized
+          cp pubspec.yaml /tmp/work_timer_optimized/
+          cp -rf lib /tmp/work_timer_optimized/
+          
+      - name: Install Dependencies
+        run: |
+          cd /tmp/work_timer_optimized
+          flutter pub get
+          
+      - name: Build APK
+        run: |
+          cd /tmp/work_timer_optimized
+          flutter build apk --release
+          mkdir -p $GITHUB_WORKSPACE/output
+          cp /tmp/work_timer_optimized/build/app/outputs/flutter-apk/app-release.apk $GITHUB_WORKSPACE/output/work_timer_optimized.apk
+          
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: work-timer-optimized-apk
+          path: output/work_timer_optimized.apk
