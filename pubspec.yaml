@@ -1,0 +1,22 @@
+name: work_timer_optimized
+description: A optimized work timer app with fast performance.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  dynamic_color: ^1.6.8
+  provider: ^6.0.5
+  hive_flutter: ^1.1.0
+  webdav_client: ^1.2.1
+  csv: ^5.1.1
+  path_provider: ^2.0.15
+  intl: ^0.18.1
+  table_calendar: ^3.0.9
+
+flutter:
+  uses-material-design: true
